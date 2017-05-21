@@ -62,14 +62,13 @@ TIME_REMAINING_UNKNOWN = -1.0
 TIME_REMAINING_UNLIMITED = -2.0
 
 
-class PowerManagementBase(object):
+class PowerManagementBase(object, metaclass=ABCMeta):
     """
     Base class for platform dependent PowerManagement functions.
 
     @ivar _weak_observers: List of weak reference to added observers
     @note: Platform's implementation may provide additional parameters for initialization
     """
-    __metaclass__ = ABCMeta
 
     def __init__(self):
         self._weak_observers = []
@@ -143,12 +142,11 @@ class PowerManagementBase(object):
                 self.remove_observer(observer)
 
 
-class PowerManagementObserver:
+class PowerManagementObserver(metaclass=ABCMeta):
     """
     Base class for PowerManagement observers.
     Do not make assumptions in what thread or event loop these methods are called.
     """
-    __metaclass__ = ABCMeta
 
     @abstractmethod
     def on_power_sources_change(self, power_management):
